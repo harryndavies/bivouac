@@ -21,8 +21,8 @@ export default function Auth(props: IProps): JSX.Element {
   }, [user, props]);
 
   return (
-    <Box sx={{ p: 1.5 }}>
-      <Grid container spacing={1}>
+    <Box>
+      <Grid container>
         <Grid item xs={12}>
           <Button
             fullWidth
@@ -31,13 +31,14 @@ export default function Auth(props: IProps): JSX.Element {
             sx={{
               textTransform: "none",
               fontWeight: 700,
+              borderRadius: 0,
               backgroundColor: "#3578e5",
               color: "white",
               ":hover": { backgroundColor: "#3578e5" },
             }}
             onClick={() => signInWithFacebook()}
           >
-            Login with Facebook
+            Facebook
           </Button>
         </Grid>
       </Grid>
