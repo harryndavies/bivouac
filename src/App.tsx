@@ -2,7 +2,6 @@ import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { useDocumentTitle } from "@react-hookz/web";
-import Map from "./components/Map";
 
 const theme = createTheme({
   palette: {
@@ -34,7 +33,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Map />
     </ThemeProvider>
   );
 }
