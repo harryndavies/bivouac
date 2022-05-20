@@ -6,7 +6,7 @@ interface IProps {
   words: string;
 }
 
-export default function Navigate({ point, words }: IProps) {
+export default function Navigate({ point, words }: IProps): JSX.Element {
   return (
     <Box sx={{ p: 1.5 }}>
       <a

@@ -7,7 +7,7 @@ import { app } from "../firebase-config";
 import Control from "./control/Control";
 import SessionControl from "./control/SessionControl";
 
-export default function MapUI() {
+export default function MapUI(): JSX.Element {
   const { mapRef, view } = useWebMap();
   const [user] = useAuthState(getAuth(app));
 
@@ -16,14 +16,14 @@ export default function MapUI() {
       sx={{
         padding: 0,
         margin: 0,
-        height: "100vh",
+        height: "calc(100vh - 48px)",
         width: "100vw",
         position: "relative",
       }}
       ref={mapRef}
     >
       {view ? <Control view={view} /> : null}
-      {user ? <SessionControl user={user} /> : null}
+      {user ? <SessionControl /> : null}
     </Box>
   );
 }

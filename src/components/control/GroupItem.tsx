@@ -15,7 +15,7 @@ interface IProps {
   id: string;
 }
 
-export default function GroupItem(props: IProps) {
+export default function GroupItem(props: IProps): JSX.Element {
   const [snapshot] = useDocument(doc(getFirestore(app), "groups", props.id));
 
   const data = snapshot?.data() ? snapshot?.data() : null;
@@ -31,7 +31,7 @@ export default function GroupItem(props: IProps) {
           backgroundColor: "#fafafa",
           cursor: "pointer",
         },
-        py: "6px",
+        py: 2,
         px: "16px",
       }}
       secondaryAction={

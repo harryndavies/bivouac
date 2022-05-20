@@ -10,7 +10,7 @@ interface IProps {
   setMode(newMode: Modes): void;
 }
 
-export default function Auth(props: IProps) {
+export default function Auth(props: IProps): JSX.Element {
   const [signInWithFacebook, user] = useSignInWithFacebook(getAuth(app));
 
   // Redirect if user is authenticated

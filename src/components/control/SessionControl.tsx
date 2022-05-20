@@ -1,6 +1,6 @@
 import { Logout } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { signOut, getAuth, User } from "firebase/auth";
+import { signOut, getAuth } from "firebase/auth";
 import React from "react";
 import { app } from "../../firebase-config";
 
@@ -12,11 +12,7 @@ const styles = {
   },
 };
 
-interface IProps {
-  user: User;
-}
-
-export default function SessionControl(props: IProps) {
+function SessionControl(): JSX.Element {
   return (
     <Button
       startIcon={<Logout />}
@@ -29,3 +25,5 @@ export default function SessionControl(props: IProps) {
     </Button>
   );
 }
+
+export default React.memo(SessionControl);

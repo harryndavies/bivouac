@@ -9,7 +9,7 @@ interface IProps {
   user: User;
 }
 
-export default function Groups(props: IProps) {
+export default function Groups(props: IProps): JSX.Element {
   const memberships = useLiveDocuments<{ group: string }>({
     collectionName: "memberships",
     queryConstraints: [where("user", "==", props.user.email)],

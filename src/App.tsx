@@ -3,14 +3,15 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { useDocumentTitle } from "@react-hookz/web";
 import MapUI from "./components/MapUI";
+import ButtonAppBar from "./components/navigation/ButtonAppBar";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#007f5f",
+      main: "#005379;",
     },
     secondary: {
-      main: "#38a3a5",
+      main: "#99d98c",
     },
   },
 
@@ -25,15 +26,21 @@ const theme = createTheme({
         },
       },
     },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        notchedOutline: { border: "none" },
+      },
+    },
   },
 });
 
-function App() {
+function App(): JSX.Element {
   useDocumentTitle("Bivouac");
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <ButtonAppBar />
       <MapUI />
     </ThemeProvider>
   );

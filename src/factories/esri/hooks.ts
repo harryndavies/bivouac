@@ -29,12 +29,12 @@ export function useWebMap(options?: __esri.MapViewProperties) {
       map: webmap,
       container: mapRef.current as HTMLDivElement,
       ...options,
-
       constraints: { minZoom: 15 },
       center: [-2.58791, 51.454514],
       spatialReference: {
         wkid: 3857,
       },
+      ui: { components: ["attribution"] },
     });
 
     mapView.when(() => {

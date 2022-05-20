@@ -3,8 +3,6 @@ import {
   Button,
   Collapse,
   IconButton,
-  InputAdornment,
-  OutlinedInput,
   Paper,
   Typography,
 } from "@mui/material";
@@ -13,12 +11,10 @@ import Graphic from "@arcgis/core/Graphic";
 import { createFeature } from "../../factories/esri/helpers";
 import { useDrawPoint } from "../../factories/esri/hooks";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
-import { GiCampingTent } from "react-icons/gi";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import {
   Add,
-  Clear,
   ContentCopy,
   Directions,
   Group,
@@ -35,6 +31,8 @@ import Auth from "./Auth";
 import { getAuth } from "firebase/auth";
 import { app } from "../../firebase-config";
 import LoadingButton from "@mui/lab/LoadingButton";
+import Search from "./Search";
+import { FiMapPin } from "react-icons/fi";
 
 const styles = {
   container: {
@@ -42,10 +40,11 @@ const styles = {
     position: "absolute",
     backgroundColor: "white",
     top: 15,
-    right: 15,
+    left: 15,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    borderRadius: 0,
   },
   button: {
     height: "100%",
@@ -69,20 +68,21 @@ export enum Modes {
   NEW,
   AUTH,
   SEARCH,
+  NONE,
 }
 
 interface IProps {
   view: __esri.MapView;
 }
 
-export default function Control(props: IProps) {
+export default function Control(props: IProps): JSX.Element {
   const [loggedIn] = useAuthState(getAuth(app));
 
   const [point, setPoint] = React.useState<__esri.Point>(initPoint);
 
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const [mode, setMode] = React.useState<Modes>(Modes.NAVIGATE);
+  const [mode, setMode] = React.useState<Modes>(Modes.NONE);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [value, copy] = useCopyToClipboard();
@@ -164,18 +164,20 @@ export default function Control(props: IProps) {
         >
           <Box display="flex" alignItems={"center"}>
             <Box
-              style={{ fontSize: "28px", color: "#007f5f" }}
+              style={{ fontSize: "28px", color: "#0c4265" }}
               display="flex"
               alignItems={"center"}
             >
-              <GiCampingTent />
+              <FiMapPin />
             </Box>
             <Typography
               fontSize={"24px"}
               fontWeight={600}
               sx={{ p: 0, m: 0, ml: 1, color: "#0A3049" }}
             >
-              {whatWords}
+              {point.latitude.toString().slice(0, 10)}
+              {", "}
+              {point.longitude.toString().slice(0, 10)}
             </Typography>
           </Box>
           <Box
@@ -269,37 +271,9 @@ export default function Control(props: IProps) {
     );
   }
 
-  function renderSearch(): JSX.Element {
-    return (
-      <Box>
-        <Box display={"flex"} alignItems="center">
-          <OutlinedInput
-            fullWidth
-            placeholder="Search"
-            autoFocus={true}
-            sx={{ padding: "4px 12px" }}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  edge="end"
-                  sx={{ marginRight: "12px" }}
-                  onClick={() => setMode(Modes.NEW)}
-                >
-                  <Clear />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </Box>
-        <Box sx={{ height: 166, backgroundColor: "#f2f4f5" }}></Box>
-      </Box>
-    );
-  }
-
   return (
     <Paper sx={styles.container}>
-      {mode === Modes.SEARCH ? renderSearch() : renderTools()}
+      {mode === Modes.SEARCH ? <Search setMode={setMode} /> : renderTools()}
     </Paper>
   );
 }
