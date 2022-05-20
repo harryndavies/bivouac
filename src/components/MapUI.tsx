@@ -6,11 +6,12 @@ import { getFeatureLayers } from "../factories/esri/helpers";
 import { useWebMap } from "../factories/esri/hooks";
 import { app } from "../firebase-config";
 import Control from "./control/Control";
-import SessionControl from "./control/SessionControl";
+import GroupControl from "./control/groups/GroupControl";
 
 export default function MapUI(): JSX.Element {
   const { mapRef, view } = useWebMap();
   const [user] = useAuthState(getAuth(app));
+  const [currentGroup, setCurrentGroup] = React.useState<string>("");
 
   /**
    * Hide all features if no user authenticated
@@ -38,8 +39,16 @@ export default function MapUI(): JSX.Element {
       }}
       ref={mapRef}
     >
-      {view ? <Control view={view} /> : null}
-      {user ? <SessionControl /> : null}
+      {view ? <Control view={view} currentGroup={currentGroup} /> : null}
+
+      {user && view ? (
+        <GroupControl
+          user={user}
+          view={view}
+          currentGroup={currentGroup}
+          setCurrentGroup={setCurrentGroup}
+        />
+      ) : null}
     </Box>
   );
 }

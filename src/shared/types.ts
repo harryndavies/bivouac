@@ -7,6 +7,7 @@ export interface IGroup {
 export interface IMembership {
   id?: string;
   group: string;
+  groupName: string;
   user: string;
 }
 

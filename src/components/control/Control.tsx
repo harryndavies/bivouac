@@ -24,7 +24,7 @@ import Point from "@arcgis/core/geometry/Point";
 import Navigate from "./Navigate";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 import New from "./New";
-import Groups from "./Groups";
+import Groups from "./groups/Groups";
 import Auth from "./Auth";
 import { getAuth } from "firebase/auth";
 import { app } from "../../firebase-config";
@@ -70,6 +70,7 @@ export enum Modes {
 
 interface IProps {
   view: __esri.MapView;
+  currentGroup: string;
 }
 
 export default function Control(props: IProps): JSX.Element {
@@ -113,6 +114,8 @@ export default function Control(props: IProps): JSX.Element {
 
     tempGraphicsLayer.add(new Graphic({ geometry: point, symbol: symbol }));
 
+    props.view.goTo(point);
+
     setPoint(point);
 
     activate();
@@ -150,11 +153,9 @@ export default function Control(props: IProps): JSX.Element {
             <Typography
               fontSize={"24px"}
               fontWeight={600}
-              sx={{ p: 0, m: 0, ml: 0.5, color: "#0A3049" }}
+              sx={{ p: 0, m: 0, ml: 0.8, color: "#0A3049" }}
             >
-              {point.latitude.toString().slice(0, 10)}
-              {", "}
-              {point.longitude.toString().slice(0, 10)}
+              {whatWords}
             </Typography>
           </Box>
           <Box
@@ -228,6 +229,7 @@ export default function Control(props: IProps): JSX.Element {
               words={whatWords}
               view={props.view}
               tempGraphicsLayer={tempGraphicsLayer}
+              currentGroup={props.currentGroup}
             />
           ) : (
             <Auth setMode={setMode} />

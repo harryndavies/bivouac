@@ -9,7 +9,7 @@ import {
 import { doc, getFirestore } from "firebase/firestore";
 import React from "react";
 import { useDocument } from "react-firebase-hooks/firestore";
-import { app } from "../../firebase-config";
+import { app } from "../../../firebase-config";
 import { GroupsModes, initialMode, GroupsMode } from "./Groups";
 
 interface IProps {
@@ -67,8 +67,7 @@ export default function GroupItem(props: IProps): JSX.Element {
           backgroundColor: "#fafafa",
           cursor: "pointer",
         },
-        py: 2,
-        px: "16px",
+        px: 2,
       }}
       secondaryAction={renderActionButton()}
     >

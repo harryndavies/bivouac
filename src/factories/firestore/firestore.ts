@@ -29,7 +29,11 @@ export class FirestoreDB {
     });
 
     if (groupID) {
-      this.createMembership({ group: groupID.id, user: group.admin });
+      this.createMembership({
+        group: groupID.id,
+        user: group.admin,
+        groupName: group.name,
+      });
     }
 
     return groupID;

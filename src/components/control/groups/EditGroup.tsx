@@ -10,9 +10,9 @@ import {
 } from "@mui/material";
 import { where } from "firebase/firestore";
 import React from "react";
-import { FirestoreDB } from "../../factories/firestore/firestore";
-import { useLiveDocuments } from "../../factories/utils/hooks";
-import { IMembership } from "../../shared/types";
+import { FirestoreDB } from "../../../factories/firestore/firestore";
+import { useLiveDocuments } from "../../../factories/utils/hooks";
+import { IMembership } from "../../../shared/types";
 import { GroupsMode } from "./Groups";
 
 interface IProps {
@@ -32,7 +32,11 @@ export default function EditGroup(props: IProps) {
   const createMembership = () => {
     if (props.mode.group?.id) {
       try {
-        db.createMembership({ group: props.mode.group?.id, user: email });
+        db.createMembership({
+          group: props.mode.group?.id,
+          user: email,
+          groupName: props.mode.group.groupName,
+        });
         setEmail("");
       } catch (error) {
         console.warn(error);

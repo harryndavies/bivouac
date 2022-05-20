@@ -11,9 +11,9 @@ import {
 import { User } from "firebase/auth";
 import { where } from "firebase/firestore";
 import React from "react";
-import { FirestoreDB } from "../../factories/firestore/firestore";
-import { useLiveDocuments } from "../../factories/utils/hooks";
-import { IMembership } from "../../shared/types";
+import { FirestoreDB } from "../../../factories/firestore/firestore";
+import { useLiveDocuments } from "../../../factories/utils/hooks";
+import { IMembership } from "../../../shared/types";
 import EditGroup from "./EditGroup";
 import GroupItem from "./GroupItem";
 
