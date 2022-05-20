@@ -2,7 +2,7 @@ import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { useDocumentTitle } from "@react-hookz/web";
-import Map from "./components/map/Map";
+import Map from "./components/control/Map";
 
 const theme = createTheme({
   palette: {
