@@ -43,7 +43,7 @@ export default function New(props: IProps): JSX.Element {
 
   return (
     <Box sx={{ p: 1.5 }}>
-      <Grid container spacing={1}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
             fullWidth
@@ -61,7 +61,12 @@ export default function New(props: IProps): JSX.Element {
           </TextField>
         </Grid>
         <Grid item xs={12}>
-          <Button fullWidth onClick={createSite} disabled={group === ""}>
+          <Button
+            fullWidth
+            onClick={createSite}
+            disabled={group === ""}
+            variant="outlined"
+          >
             Save
           </Button>
         </Grid>

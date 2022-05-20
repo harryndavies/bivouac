@@ -10,12 +10,12 @@ import { doc, getFirestore } from "firebase/firestore";
 import React from "react";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { app } from "../../firebase-config";
-import { GroupsModes, initialMode, Mode } from "./Groups";
+import { GroupsModes, initialMode, GroupsMode } from "./Groups";
 
 interface IProps {
   id: string;
-  mode: Mode;
-  setMode(newMode: Mode): void;
+  mode: GroupsMode;
+  setMode(newMode: GroupsMode): void;
 }
 
 export default function GroupItem(props: IProps): JSX.Element {

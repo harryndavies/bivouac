@@ -22,7 +22,7 @@ export enum GroupsModes {
   EDIT,
 }
 
-export type Mode = {
+export type GroupsMode = {
   mode: GroupsModes;
   group: { id: string; groupName: string } | undefined;
 };
@@ -37,7 +37,7 @@ interface IProps {
 }
 
 export default function Groups(props: IProps): JSX.Element {
-  const [mode, setMode] = React.useState<Mode>(initialMode);
+  const [mode, setMode] = React.useState<GroupsMode>(initialMode);
 
   const [newGroupName, setNewGroupName] = React.useState<string>("");
 
@@ -97,7 +97,7 @@ export default function Groups(props: IProps): JSX.Element {
         />
       ) : null}
 
-      {mode.group?.id ? <EditGroup id={mode.group.id} mode={mode} /> : null}
+      {mode.group?.id ? <EditGroup mode={mode} /> : null}
     </Box>
   );
 }

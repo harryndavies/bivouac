@@ -7,24 +7,22 @@ import {
   Box,
   Typography,
   Chip,
-  Button,
 } from "@mui/material";
 import { where } from "firebase/firestore";
 import React from "react";
 import { FirestoreDB } from "../../factories/firestore/firestore";
 import { useLiveDocuments } from "../../factories/utils/hooks";
 import { IMembership } from "../../shared/types";
-import { Mode } from "./Groups";
+import { GroupsMode } from "./Groups";
 
 interface IProps {
-  id: string;
-  mode: Mode;
+  mode: GroupsMode;
 }
 
 export default function EditGroup(props: IProps) {
   const groupMembers = useLiveDocuments<IMembership>({
     collectionName: "memberships",
-    queryConstraints: [where("group", "==", props.id)],
+    queryConstraints: [where("group", "==", props.mode.group?.id)],
   });
 
   const [email, setEmail] = React.useState<string>("");
@@ -97,10 +95,6 @@ export default function EditGroup(props: IProps) {
           );
         })}
       </Box>
-
-      <Button color="error" fullWidth sx={{ m: 0.5 }}>
-        Delete Group
-      </Button>
     </>
   );
 }
