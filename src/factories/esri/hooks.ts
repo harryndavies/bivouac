@@ -1,9 +1,8 @@
 import MapView from "@arcgis/core/views/MapView";
-import ArcGISMap from "@arcgis/core/Map";
 import React from "react";
 import esriConfig from "@arcgis/core/config";
-import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import Point from "@arcgis/core/geometry/Point";
+import WebMap from "@arcgis/core/WebMap";
 
 /**
  * Custom hook to create a view from a webmap
@@ -11,29 +10,27 @@ import Point from "@arcgis/core/geometry/Point";
  * @param options
  * @returns ref to be passed map container/div, mapview
  */
-export function useWebMap(
-  map?: __esri.WebMapProperties,
-  options?: __esri.MapViewProperties
-) {
+export function useWebMap(options?: __esri.MapViewProperties) {
   // Create a ref to element to be used as the map's container
   const mapRef = React.useRef<HTMLDivElement>(null);
   // Hold on to the view in state
   const [view, setView] = React.useState<__esri.MapView>();
 
   React.useEffect(() => {
-    const defaultMap = new ArcGISMap({
-      basemap: "streets-navigation-vector",
+    esriConfig.apiKey = process.env.REACT_APP_ESRIAPI || "";
+
+    const webmap = new WebMap({
+      portalItem: {
+        id: "b6d734fd320d43c0ad673c09e0878c28",
+      },
     });
 
-    esriConfig.apiKey =
-      "AAPKf1fadf47c87e4bd1abb01904a0ab03feTQSNGPtVsvkEVrWi4RcQfYNYvkApKW-iXRW13S5c7GNi_MN5Mgdt2sPeekWtLlPE";
-
     const mapView = new MapView({
-      map: map || defaultMap,
+      map: webmap,
       container: mapRef.current as HTMLDivElement,
       ...options,
 
-      constraints: { minZoom: 12 },
+      constraints: { minZoom: 15 },
       center: [-2.58791, 51.454514],
       spatialReference: {
         wkid: 3857,
@@ -42,26 +39,6 @@ export function useWebMap(
 
     mapView.when(() => {
       setView(mapView);
-
-      const renderer = {
-        type: "simple",
-        symbol: {
-          type: "picture-marker",
-          url: "http://static.arcgis.com/images/Symbols/NPS/npsPictograph_0231b.png",
-          width: "18px",
-          height: "18px",
-        },
-      };
-
-      const layer = new FeatureLayer({
-        url: "https://services7.arcgis.com/AE6LrdSL5QdoWEcC/arcgis/rest/services/sites/FeatureServer/0",
-        spatialReference: {
-          wkid: 3857,
-        },
-        renderer: renderer as any,
-      });
-
-      mapView.map.add(layer);
     });
 
     return function cleanUp() {
@@ -112,30 +89,19 @@ export function useDrawPoint(
       deactivate();
     };
 
-    // Get the map surface
-    const surface = (view as any)?.surface;
-    let handle: IHandle;
-
-    if (active && view) {
-      // Allow user to draw when select mode or they are viewing a form
-      view.popup.autoOpenEnabled = false;
-      handle = view.on("click", handleDraw);
-
-      // Set draw mode and cursor as draw tool doesn't set the cursor
-      surface.style.cursor = "crosshair";
+    if (!view || !active) {
+      return;
     }
 
-    return function cleanup() {
-      if (view) {
-        view.popup.autoOpenEnabled = true;
+    // Get the map surface
+    const surface = (view as any)?.surface;
 
-        // Clean
-        handle?.remove();
+    // Allow user to draw when select mode or they are viewing a form
+    view.popup.autoOpenEnabled = false;
+    view.on("click", handleDraw);
 
-        // Reset to default cursor
-        surface.style.cursor = "";
-      }
-    };
+    // Set draw mode and cursor as draw tool doesn't set the cursor
+    surface.style.cursor = "grab";
   }, [view, active, onDrawPoint]);
 
   return { event, activate, deactivate };
