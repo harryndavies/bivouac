@@ -22,7 +22,7 @@ export default function SessionControl(props: IProps) {
       startIcon={<Logout />}
       variant="contained"
       onClick={() => signOut(getAuth(app))}
-      sx={{ textTransform: "none", ...styles.container }}
+      sx={styles.container}
       color="secondary"
     >
       Sign out

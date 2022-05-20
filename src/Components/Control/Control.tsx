@@ -53,7 +53,6 @@ const styles = {
     boxShadow: 0,
     py: 1.5,
     fontWeight: 550,
-    textTransform: "none",
   },
 };
 
@@ -83,7 +82,7 @@ export default function Control(props: IProps) {
 
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const [mode, setMode] = React.useState<Modes>(Modes.NEW);
+  const [mode, setMode] = React.useState<Modes>(Modes.NAVIGATE);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [value, copy] = useCopyToClipboard();
@@ -109,14 +108,12 @@ export default function Control(props: IProps) {
   }, [props.view, tempGraphicsLayer]);
 
   const onDrawComplete = async (point: __esri.Point) => {
-    setMode(Modes.NEW);
-
     tempGraphicsLayer.removeAll();
 
-    var symbol = new SimpleMarkerSymbol({
+    const symbol = new SimpleMarkerSymbol({
       style: "square",
       size: 11.5,
-      outline: { color: "red" },
+      outline: { color: "white" },
     });
 
     tempGraphicsLayer.add(new Graphic({ geometry: point, symbol: symbol }));
@@ -174,7 +171,7 @@ export default function Control(props: IProps) {
               <GiCampingTent />
             </Box>
             <Typography
-              fontSize={"20px"}
+              fontSize={"24px"}
               fontWeight={600}
               sx={{ p: 0, m: 0, ml: 1, color: "#0A3049" }}
             >

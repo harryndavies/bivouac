@@ -2,10 +2,10 @@ import { Box } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useWebMap } from "../factories/esri/hooks";
-import { app } from "../firebase-config";
-import Control from "../Components/Control/Control";
-import SessionControl from "../Components/Control/SessionControl";
+import { useWebMap } from "../../factories/esri/hooks";
+import { app } from "../../firebase-config";
+import Control from "../Control/Control";
+import SessionControl from "../Control/SessionControl";
 
 export default function Map() {
   const { mapRef, view } = useWebMap();
