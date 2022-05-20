@@ -4,8 +4,8 @@ import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useWebMap } from "../../factories/esri/hooks";
 import { app } from "../../firebase-config";
-import Control from "../Control/Control";
-import SessionControl from "../Control/SessionControl";
+import Control from "../control/Control";
+import SessionControl from "../control/SessionControl";
 
 export default function Map() {
   const { mapRef, view } = useWebMap();
