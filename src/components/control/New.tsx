@@ -16,11 +16,13 @@ interface IProps {
 }
 
 export default function New(props: IProps): JSX.Element {
+  const [loading, setLoading] = React.useState(false);
   /**
    * Handles the creation of a new site feature
    */
   const createSite = async () => {
     if (props.view && props.currentGroup !== "") {
+      setLoading(true);
       props.tempGraphicsLayer.removeAll();
 
       const newSiteAttributes: ISite = {
@@ -34,6 +36,7 @@ export default function New(props: IProps): JSX.Element {
       });
 
       await createFeature(props.view, "sites", pointGraphic);
+      setLoading(false);
     }
   };
 
@@ -44,9 +47,10 @@ export default function New(props: IProps): JSX.Element {
           fullWidth
           onClick={createSite}
           variant="contained"
-          color="success"
+          color="secondary"
           startIcon={<Save />}
           sx={{ borderRadius: 0 }}
+          disabled={props.currentGroup === "" || loading}
         >
           Save
         </Button>

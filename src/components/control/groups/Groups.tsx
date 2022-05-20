@@ -49,7 +49,7 @@ export default function Groups(props: IProps): JSX.Element {
   const db = React.useMemo(() => new FirestoreDB(), []);
 
   const createGroup = () => {
-    if (props.user.email) {
+    if (props.user.email && newGroupName !== "") {
       try {
         db.createGroup({ name: newGroupName, admin: props.user.email });
         setNewGroupName("");

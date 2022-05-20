@@ -30,7 +30,7 @@ export default function EditGroup(props: IProps) {
   const db = React.useMemo(() => new FirestoreDB(), []);
 
   const createMembership = () => {
-    if (props.mode.group?.id) {
+    if (props.mode.group?.id && email !== "") {
       try {
         db.createMembership({
           group: props.mode.group?.id,

@@ -48,20 +48,23 @@ export default function GroupControl(props: IProps) {
 
   return (
     <Paper sx={styles.container}>
-      <TextField
-        fullWidth
-        focused={true}
-        select
-        value={props.currentGroup}
-        onChange={(event) => props.setCurrentGroup(event.target.value)}
-        sx={{ width: 200 }}
-      >
-        {myMemberships.map((m) => (
-          <MenuItem key={m.group} value={m.group}>
-            {m.groupName}
-          </MenuItem>
-        ))}
-      </TextField>
+      {props.currentGroup !== "" ? (
+        <TextField
+          fullWidth
+          focused={true}
+          select
+          value={props.currentGroup}
+          onChange={(event) => props.setCurrentGroup(event.target.value)}
+          sx={{ width: 200 }}
+          disabled={myMemberships.length === 1}
+        >
+          {myMemberships.map((m) => (
+            <MenuItem key={m.group} value={m.group}>
+              {m.groupName}
+            </MenuItem>
+          ))}
+        </TextField>
+      ) : null}
       <Button
         startIcon={<Logout />}
         variant="contained"
