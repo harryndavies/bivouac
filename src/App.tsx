@@ -8,10 +8,10 @@ import ButtonAppBar from "./components/navigation/ButtonAppBar";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#005379;",
+      main: "#005379",
     },
     secondary: {
-      main: "#99d98c",
+      main: "#788BFF",
     },
   },
 
@@ -23,6 +23,7 @@ const theme = createTheme({
       styleOverrides: {
         contained: {
           textTransform: "none",
+          color: "white",
         },
       },
     },

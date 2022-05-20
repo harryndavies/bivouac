@@ -1,5 +1,11 @@
 import { Clear } from "@mui/icons-material";
-import { Box, OutlinedInput, InputAdornment, IconButton } from "@mui/material";
+import {
+  Box,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import { Modes } from "./Control";
 
@@ -39,8 +45,16 @@ export default function Search(props: IProps) {
         sx={{
           height: 166,
           backgroundColor: "#f2f4f5",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          color: "#525252",
         }}
-      ></Box>
+      >
+        <Typography sx={{ mb: 1.5 }}>Search for any place e.g.</Typography>
+        <Typography>Chamonix, France</Typography>
+      </Box>
     </Box>
   );
 }

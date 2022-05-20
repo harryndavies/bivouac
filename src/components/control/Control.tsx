@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import React from "react";
 import Graphic from "@arcgis/core/Graphic";
-import { createFeature } from "../../factories/esri/helpers";
 import { useDrawPoint } from "../../factories/esri/hooks";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -19,7 +18,6 @@ import {
   Directions,
   Group,
   SearchOutlined,
-  StarOutline,
 } from "@mui/icons-material";
 import { useCopyToClipboard } from "../../factories/utils/hooks";
 import Point from "@arcgis/core/geometry/Point";
@@ -30,7 +28,6 @@ import Groups from "./Groups";
 import Auth from "./Auth";
 import { getAuth } from "firebase/auth";
 import { app } from "../../firebase-config";
-import LoadingButton from "@mui/lab/LoadingButton";
 import Search from "./Search";
 import { FiMapPin } from "react-icons/fi";
 
@@ -80,8 +77,6 @@ export default function Control(props: IProps): JSX.Element {
 
   const [point, setPoint] = React.useState<__esri.Point>(initPoint);
 
-  const [loading, setLoading] = React.useState<boolean>(false);
-
   const [mode, setMode] = React.useState<Modes>(Modes.NONE);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -113,7 +108,7 @@ export default function Control(props: IProps): JSX.Element {
     const symbol = new SimpleMarkerSymbol({
       style: "square",
       size: 11.5,
-      outline: { color: "white" },
+      outline: { color: "#005379" },
     });
 
     tempGraphicsLayer.add(new Graphic({ geometry: point, symbol: symbol }));
@@ -135,24 +130,6 @@ export default function Control(props: IProps): JSX.Element {
     onDrawComplete
   );
 
-  /**
-   * Handles the creation of a new site feature
-   */
-  const createSite = async () => {
-    if (props.view) {
-      tempGraphicsLayer.removeAll();
-
-      setLoading(true);
-      const pointGraphic = new Graphic({
-        attributes: { words: whatWords },
-        geometry: point,
-      });
-
-      await createFeature(props.view, "sites", pointGraphic);
-      setLoading(false);
-    }
-  };
-
   function renderTools(): JSX.Element {
     return (
       <>
@@ -164,7 +141,7 @@ export default function Control(props: IProps): JSX.Element {
         >
           <Box display="flex" alignItems={"center"}>
             <Box
-              style={{ fontSize: "28px", color: "#0c4265" }}
+              style={{ fontSize: "28px", color: "#788BFF" }}
               display="flex"
               alignItems={"center"}
             >
@@ -173,7 +150,7 @@ export default function Control(props: IProps): JSX.Element {
             <Typography
               fontSize={"24px"}
               fontWeight={600}
-              sx={{ p: 0, m: 0, ml: 1, color: "#0A3049" }}
+              sx={{ p: 0, m: 0, ml: 0.5, color: "#0A3049" }}
             >
               {point.latitude.toString().slice(0, 10)}
               {", "}
@@ -226,34 +203,17 @@ export default function Control(props: IProps): JSX.Element {
           >
             Groups
           </Button>
-          {!loading ? (
-            <Button
-              variant="contained"
-              color={mode === Modes.NEW ? "secondary" : "primary"}
-              fullWidth
-              startIcon={
-                mode === Modes.NEW && loggedIn ? <StarOutline /> : <Add />
-              }
-              sx={styles.button}
-              onClick={() =>
-                mode === Modes.NEW && loggedIn
-                  ? createSite()
-                  : setMode(Modes.NEW)
-              }
-            >
-              {mode === Modes.NEW && loggedIn ? "Save" : "New"}
-            </Button>
-          ) : (
-            <LoadingButton
-              loading={loading}
-              loadingPosition="start"
-              startIcon={<StarOutline />}
-              variant="contained"
-              fullWidth
-            >
-              Save
-            </LoadingButton>
-          )}
+
+          <Button
+            variant="contained"
+            color={mode === Modes.NEW ? "secondary" : "primary"}
+            fullWidth
+            startIcon={<Add />}
+            sx={styles.button}
+            onClick={() => setMode(Modes.NEW)}
+          >
+            New
+          </Button>
         </Box>
 
         <Collapse in={mode === Modes.NAVIGATE}>
@@ -261,7 +221,17 @@ export default function Control(props: IProps): JSX.Element {
         </Collapse>
 
         <Collapse in={mode === Modes.NEW}>
-          {loggedIn ? <New user={loggedIn} /> : <Auth setMode={setMode} />}
+          {loggedIn ? (
+            <New
+              user={loggedIn}
+              point={point}
+              words={whatWords}
+              view={props.view}
+              tempGraphicsLayer={tempGraphicsLayer}
+            />
+          ) : (
+            <Auth setMode={setMode} />
+          )}
         </Collapse>
 
         <Collapse in={mode === Modes.GROUPS}>
