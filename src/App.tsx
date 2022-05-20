@@ -1,5 +1,5 @@
 import React from "react";
-import Map from "./Components/Map/Map";
+import Map from "./components/map/Map";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { useDocumentTitle } from "@react-hookz/web";
