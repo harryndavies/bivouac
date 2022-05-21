@@ -1,11 +1,9 @@
-import { Logout } from "@mui/icons-material";
-import { TextField, MenuItem, Paper, Button } from "@mui/material";
-import { getAuth, signOut, User } from "firebase/auth";
+import { TextField, MenuItem, Paper } from "@mui/material";
+import { User } from "firebase/auth";
 import { where } from "firebase/firestore";
 import React from "react";
 import { getFeatureLayers } from "../../../factories/esri/helpers";
 import { useLiveDocuments } from "../../../factories/utils/hooks";
-import { app } from "../../../firebase-config";
 import { IMembership } from "../../../shared/types";
 
 const styles = {
@@ -65,15 +63,6 @@ export default function GroupControl(props: IProps) {
           ))}
         </TextField>
       ) : null}
-      <Button
-        startIcon={<Logout />}
-        variant="contained"
-        onClick={() => signOut(getAuth(app))}
-        color="secondary"
-        sx={{ display: "flex", borderRadius: 0, width: 150 }}
-      >
-        Sign out
-      </Button>
     </Paper>
   );
 }
