@@ -1,6 +1,6 @@
 import Graphic from "@arcgis/core/Graphic";
 import { Save } from "@mui/icons-material";
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Divider, Grid, TextField } from "@mui/material";
 import { User } from "firebase/auth";
 import React from "react";
 import { createFeature } from "../../factories/esri/helpers";
@@ -42,18 +42,28 @@ export default function New(props: IProps): JSX.Element {
 
   return (
     <Box>
-      <Grid item xs={12}>
-        <Button
-          fullWidth
-          onClick={createSite}
-          variant="contained"
-          color="secondary"
-          startIcon={<Save />}
-          sx={{ borderRadius: 0 }}
-          disabled={props.currentGroup === "" || loading}
-        >
-          Save
-        </Button>
+      <Grid container>
+        <Grid item xs={12}>
+          <TextField placeholder="Title" fullWidth />
+          <Divider />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField multiline rows={2} placeholder="Description" fullWidth />
+        </Grid>
+
+        <Grid item xs={12}>
+          <Button
+            fullWidth
+            onClick={createSite}
+            variant="contained"
+            color="primary"
+            startIcon={<Save />}
+            sx={{ borderRadius: 0 }}
+            disabled={props.currentGroup === "" || loading}
+          >
+            Save
+          </Button>
+        </Grid>
       </Grid>
     </Box>
   );

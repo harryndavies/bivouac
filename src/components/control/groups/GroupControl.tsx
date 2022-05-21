@@ -13,7 +13,9 @@ const styles = {
     bottom: 24,
     left: 15,
     display: "flex",
+    alignItems: "center",
     borderRadius: 0,
+    pr: 1,
   },
 };
 
@@ -34,7 +36,6 @@ export default function GroupControl(props: IProps) {
     if (props.currentGroup === "" && myMemberships.length !== 0) {
       props.setCurrentGroup(myMemberships[0].group);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [myMemberships]);
 

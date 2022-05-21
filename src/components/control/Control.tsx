@@ -32,17 +32,6 @@ import Search from "./Search";
 import { FiMapPin } from "react-icons/fi";
 
 const styles = {
-  container: {
-    width: 400,
-    position: "absolute",
-    backgroundColor: "white",
-    top: 15,
-    left: 15,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    borderRadius: 0,
-  },
   button: {
     height: "100%",
     borderRadius: 0,
@@ -244,7 +233,23 @@ export default function Control(props: IProps): JSX.Element {
   }
 
   return (
-    <Paper sx={styles.container}>
+    <Paper
+      sx={{
+        width: {
+          xs: "100vw",
+          sm: "100vw",
+          md: 400,
+        },
+        backgroundColor: "white",
+        position: "absolute",
+        left: "50%",
+        transform: "translate(-50%, 0)",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        borderRadius: 0,
+      }}
+    >
       {mode === Modes.SEARCH ? <Search setMode={setMode} /> : renderTools()}
     </Paper>
   );
