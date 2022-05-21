@@ -95,6 +95,8 @@ export default function Control(props: IProps): JSX.Element {
   const onDrawComplete = async (point: __esri.Point) => {
     tempGraphicsLayer.removeAll();
 
+    setMode(Modes.NONE);
+
     const symbol = new SimpleMarkerSymbol({
       style: "square",
       size: 11.5,
@@ -236,10 +238,11 @@ export default function Control(props: IProps): JSX.Element {
     <Paper
       sx={{
         width: {
-          xs: "100vw",
-          sm: "100vw",
+          xs: "92vw",
+          sm: "92vw",
           md: 400,
         },
+        marginTop: 1.8,
         backgroundColor: "white",
         position: "absolute",
         left: "50%",
