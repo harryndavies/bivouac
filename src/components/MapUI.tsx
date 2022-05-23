@@ -6,6 +6,7 @@ import { useWebMap } from "../factories/esri/hooks";
 import { app } from "../firebase-config";
 import Control from "./control/Control";
 import { useCurrentGroup, useInitFeatureVisibility } from "./hooks/hooks";
+import { use100vh } from "react-div-100vh";
 
 export default function MapUI(): JSX.Element {
   const { mapRef, view } = useWebMap();
@@ -17,6 +18,8 @@ export default function MapUI(): JSX.Element {
     user?.email || ""
   );
 
+  const height = use100vh();
+
   /**
    * Hide all features if user is not authenticated
    */
@@ -27,7 +30,7 @@ export default function MapUI(): JSX.Element {
       sx={{
         padding: 0,
         margin: 0,
-        height: "calc(100vh - 48px)",
+        height: `calc(${height}px - 48px)`,
         width: "100vw",
         position: "relative",
       }}

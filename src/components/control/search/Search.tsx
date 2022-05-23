@@ -76,7 +76,9 @@ export default function Search(props: IProps) {
       >
         <List sx={{ p: 0 }}>
           {loadedFeatures
-            .filter((lf) => lf.attributes.title.includes(search))
+            .filter((lf) =>
+              lf.attributes.title.toLowerCase().includes(search.toLowerCase())
+            )
             .map((lf) => (
               <ListItem
                 sx={{

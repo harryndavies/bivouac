@@ -35,7 +35,12 @@ export default function New(props: IProps): JSX.Element {
         geometry: props.point,
       });
 
-      await createFeature(props.view, "sites", pointGraphic);
+      try {
+        await createFeature(props.view, "sites", pointGraphic);
+        setTitle("");
+      } catch (error) {
+        console.warn(error);
+      }
     }
   };
 

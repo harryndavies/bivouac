@@ -243,6 +243,7 @@ export default function Control(props: IProps): JSX.Element {
         marginTop: 1.8,
         backgroundColor: "white",
         position: "absolute",
+        top: 0,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
