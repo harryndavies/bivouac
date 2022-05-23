@@ -3,6 +3,22 @@ import React from "react";
 import esriConfig from "@arcgis/core/config";
 import Point from "@arcgis/core/geometry/Point";
 import WebMap from "@arcgis/core/WebMap";
+import Locate from "@arcgis/core/widgets/Locate";
+
+/**
+ * Creates a locate widget for the view
+ * @param view - the mapview
+ * @param position - the ui position
+ */
+function addLocate(view: MapView, position: string) {
+  if (view !== null && view.ui !== null) {
+    const locateWidget = new Locate({
+      view: view,
+    });
+
+    view.ui.add(locateWidget, position);
+  }
+}
 
 /**
  * Custom hook to create a view from a webmap
@@ -39,6 +55,7 @@ export function useWebMap(options?: __esri.MapViewProperties) {
 
     mapView.when(() => {
       setView(mapView);
+      addLocate(mapView, "bottom-right");
     });
 
     return function cleanUp() {

@@ -56,6 +56,8 @@ export const useCurrentGroup = (
       const [f] = getFeatureLayers(view, ["sites"]);
 
       f.definitionExpression = `GroupID = '${currentGroup}'`;
+
+      view.popup.close();
     }
   }, [currentGroup, view]);
 
