@@ -12,14 +12,7 @@ import { useDrawPoint } from "../../factories/esri/hooks";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import {
-  Add,
-  ContentCopy,
-  Directions,
-  Group,
-  SearchOutlined,
-} from "@mui/icons-material";
-import { useCopyToClipboard } from "../../factories/utils/hooks";
+import { Add, Directions, Group, SearchOutlined } from "@mui/icons-material";
 import Point from "@arcgis/core/geometry/Point";
 import Navigate from "./navigate/Navigate";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
@@ -70,9 +63,6 @@ export default function Control(props: IProps): JSX.Element {
 
   const [mode, setMode] = React.useState<Modes>(Modes.NONE);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [value, copy] = useCopyToClipboard();
-
   const [whatWords, setWhatWords] = React.useState<string>(initWords);
 
   usePopupOnViewClick(props.view);
@@ -103,8 +93,7 @@ export default function Control(props: IProps): JSX.Element {
     const symbol = new SimpleMarkerSymbol({
       style: "circle",
       size: 6,
-      color: "#00A676",
-      outline: { color: "#00A676" },
+      outline: { color: "#282828" },
     });
 
     tempGraphicsLayer.add(new Graphic({ geometry: point, symbol: symbol }));
@@ -158,15 +147,6 @@ export default function Control(props: IProps): JSX.Element {
             alignItems={"center"}
             justifyContent={"flex-end"}
           >
-            <IconButton
-              aria-label="copy"
-              size="medium"
-              color="primary"
-              onClick={() => copy(whatWords)}
-            >
-              <ContentCopy fontSize="inherit" />
-            </IconButton>
-
             <IconButton
               aria-label="copy"
               size="medium"
@@ -269,7 +249,15 @@ export default function Control(props: IProps): JSX.Element {
         borderRadius: 0,
       }}
     >
-      {mode === Modes.SEARCH ? <Search setMode={setMode} /> : renderTools()}
+      {mode === Modes.SEARCH ? (
+        <Search
+          view={props.view}
+          setMode={setMode}
+          setWhatWords={setWhatWords}
+        />
+      ) : (
+        renderTools()
+      )}
     </Paper>
   );
 }

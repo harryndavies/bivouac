@@ -12,6 +12,7 @@ export interface IMembership {
 }
 
 export interface ISite {
+  title: string;
   GroupID: string;
   words: string;
 }

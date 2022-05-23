@@ -1,8 +1,8 @@
-import { Menu } from "@mui/icons-material";
 import { ListItem, ListItemText } from "@mui/material";
 import { doc, getFirestore } from "firebase/firestore";
 import React from "react";
 import { useDocument } from "react-firebase-hooks/firestore";
+import { FaUsers } from "react-icons/fa";
 import { app } from "../../../firebase-config";
 
 interface IProps {
@@ -31,8 +31,12 @@ export default function GroupItem(props: IProps): JSX.Element {
       }}
       onClick={props.onClick}
     >
-      <Menu sx={{ color: "lightgray", fontSize: "18px" }} />
-      <ListItemText sx={{ ml: 0.7 }} primary={data.name} />
+      <FaUsers style={{ color: "lightgray", fontSize: "20px" }} />
+      <ListItemText
+        sx={{ ml: 2 }}
+        primary={data.name}
+        secondary={`Created by ${data.admin}`}
+      />
     </ListItem>
   );
 }

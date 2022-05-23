@@ -8,10 +8,9 @@ interface IProps {
 
 export default function Navigate({ point, words }: IProps): JSX.Element {
   return (
-    <Box sx={{ p: 2 }}>
+    <Box sx={{ p: 2 }} display="flex" justifyContent={"space-around"}>
       <a
         href={`https://www.google.com/maps/dir/?api=1&destination=${point.latitude},${point.longitude}`}
-        style={{ marginRight: "10px" }}
         target="_blank"
         rel="noreferrer"
       >
@@ -23,7 +22,6 @@ export default function Navigate({ point, words }: IProps): JSX.Element {
       </a>
       <a
         href={`https://www.waze.com/ul?ll=${point.latitude}%2C${point.longitude}&z=17`}
-        style={{ marginRight: "18px" }}
         target="_blank"
         rel="noreferrer"
       >
@@ -43,7 +41,7 @@ export default function Navigate({ point, words }: IProps): JSX.Element {
         <img
           height={"48px"}
           alt=""
-          style={{ borderRadius: "10px", marginRight: "18px" }}
+          style={{ borderRadius: "10px" }}
           src="https://miro.medium.com/max/3150/1*n9jE-NZQ_8kO1TjzJlATNA.png"
         />
       </a>
@@ -52,7 +50,7 @@ export default function Navigate({ point, words }: IProps): JSX.Element {
         <img
           height={"48px"}
           alt=""
-          style={{ borderRadius: "10px", marginRight: "18px" }}
+          style={{ borderRadius: "10px" }}
           src="https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/dhe2b3ydz2dzovjoc2j3"
         />
       </a>

@@ -63,25 +63,27 @@ export default function Groups(props: IProps): JSX.Element {
 
   return (
     <Box>
-      <List sx={{ my: 0, py: 0 }}>
-        {myMemberships.map((m) => (
-          <GroupItem
-            key={m.group}
-            id={m.group}
-            backgroundColor={
-              props.currentGroup === m.group ? "#f9f9f9" : "white"
-            }
-            onClick={() => {
-              props.setCurrentGroup(m.group);
+      <Box sx={{ maxHeight: 200, overflowY: "scroll" }}>
+        <List sx={{ my: 0, py: 0 }}>
+          {myMemberships.map((m) => (
+            <GroupItem
+              key={m.group}
+              id={m.group}
+              backgroundColor={
+                props.currentGroup === m.group ? "#f9f9f9" : "white"
+              }
+              onClick={() => {
+                props.setCurrentGroup(m.group);
 
-              setMode({
-                mode: GroupsModes.EDIT,
-                group: { id: m.group, groupName: m.groupName },
-              });
-            }}
-          />
-        ))}
-      </List>
+                setMode({
+                  mode: GroupsModes.EDIT,
+                  group: { id: m.group, groupName: m.groupName },
+                });
+              }}
+            />
+          ))}
+        </List>
+      </Box>
       <Divider />
       <Box sx={{ px: 2, pt: 1.5 }}>
         <Typography fontWeight={700} color="primary">

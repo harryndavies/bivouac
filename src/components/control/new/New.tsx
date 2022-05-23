@@ -15,14 +15,17 @@ interface IProps {
 }
 
 export default function New(props: IProps): JSX.Element {
+  const [title, setTitle] = React.useState<string>("");
+
   /**
    * Handles the creation of a new site feature
    */
   const createSite = async () => {
-    if (props.view && props.currentGroup !== "") {
+    if (props.view && props.currentGroup !== "" && title) {
       props.tempGraphicsLayer.removeAll();
 
       const newSiteAttributes: ISite = {
+        title: title,
         words: props.words,
         GroupID: props.currentGroup,
       };
@@ -40,7 +43,12 @@ export default function New(props: IProps): JSX.Element {
     <Box>
       <Grid container>
         <Grid item xs={9}>
-          <TextField placeholder="Title" fullWidth />
+          <TextField
+            placeholder="Title"
+            fullWidth
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+          />
           <Divider />
         </Grid>
         <Grid item xs={3} sx={{ display: "flex", alignItems: "center" }}>
