@@ -3,7 +3,7 @@ import React from "react";
 import { getAuth } from "firebase/auth";
 import { app } from "../../firebase-config";
 import { useSignInWithFacebook } from "react-firebase-hooks/auth";
-import { Modes } from "./Control";
+import { Modes } from "../control/Control";
 import { FacebookRounded } from "@mui/icons-material";
 
 interface IProps {

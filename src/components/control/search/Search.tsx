@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { Modes } from "./Control";
+import { Modes } from "../Control";
 
 interface IProps {
   setMode(newMode: Modes): void;

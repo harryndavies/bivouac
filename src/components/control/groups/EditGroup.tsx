@@ -5,7 +5,6 @@ import {
   IconButton,
   Divider,
   Box,
-  Typography,
   Chip,
 } from "@mui/material";
 import { where } from "firebase/firestore";
@@ -70,11 +69,6 @@ export default function EditGroup(props: IProps) {
       />
 
       <Divider />
-      <Box sx={{ px: 2, pt: 1.5 }}>
-        <Typography fontWeight={700} color="primary">
-          {`Members (${groupMembers.length})`}
-        </Typography>
-      </Box>
 
       <Box
         sx={{

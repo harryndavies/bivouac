@@ -21,15 +21,15 @@ import {
 } from "@mui/icons-material";
 import { useCopyToClipboard } from "../../factories/utils/hooks";
 import Point from "@arcgis/core/geometry/Point";
-import Navigate from "./Navigate";
+import Navigate from "./navigate/Navigate";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
-import New from "./New";
+import New from "./new/New";
 import Groups from "./groups/Groups";
-import Auth from "./Auth";
+import Auth from "../authentication/Auth";
 import { getAuth } from "firebase/auth";
 import { app } from "../../firebase-config";
-import Search from "./Search";
-import { FiMapPin } from "react-icons/fi";
+import Search from "./search/Search";
+import { usePopupOnViewClick } from "../hooks/hooks";
 
 const styles = {
   button: {
@@ -60,6 +60,7 @@ export enum Modes {
 interface IProps {
   view: __esri.MapView;
   currentGroup: string;
+  setCurrentGroup(newGroup: string): void;
 }
 
 export default function Control(props: IProps): JSX.Element {
@@ -73,6 +74,8 @@ export default function Control(props: IProps): JSX.Element {
   const [value, copy] = useCopyToClipboard();
 
   const [whatWords, setWhatWords] = React.useState<string>(initWords);
+
+  usePopupOnViewClick(props.view);
 
   const getThreeWords = async (point: __esri.Point): Promise<void> => {
     const response =
@@ -98,9 +101,10 @@ export default function Control(props: IProps): JSX.Element {
     setMode(Modes.NONE);
 
     const symbol = new SimpleMarkerSymbol({
-      style: "square",
-      size: 11.5,
-      outline: { color: "#005379" },
+      style: "circle",
+      size: 6,
+      color: "#00A676",
+      outline: { color: "#00A676" },
     });
 
     tempGraphicsLayer.add(new Graphic({ geometry: point, symbol: symbol }));
@@ -135,16 +139,16 @@ export default function Control(props: IProps): JSX.Element {
         >
           <Box display="flex" alignItems={"center"}>
             <Box
-              style={{ fontSize: "28px", color: "#788BFF" }}
+              style={{ fontSize: "28px", color: "#1e1f27" }}
               display="flex"
               alignItems={"center"}
             >
-              <FiMapPin />
+              {`///`}
             </Box>
             <Typography
               fontSize={"24px"}
               fontWeight={600}
-              sx={{ p: 0, m: 0, ml: 0.8, color: "#0A3049" }}
+              sx={{ p: 0, m: 0, ml: 0.2, color: "#0A3049" }}
             >
               {whatWords}
             </Typography>
@@ -228,7 +232,15 @@ export default function Control(props: IProps): JSX.Element {
         </Collapse>
 
         <Collapse in={mode === Modes.GROUPS}>
-          {loggedIn ? <Groups user={loggedIn} /> : <Auth setMode={setMode} />}
+          {loggedIn ? (
+            <Groups
+              user={loggedIn}
+              currentGroup={props.currentGroup}
+              setCurrentGroup={props.setCurrentGroup}
+            />
+          ) : (
+            <Auth setMode={setMode} />
+          )}
         </Collapse>
       </>
     );
@@ -242,11 +254,15 @@ export default function Control(props: IProps): JSX.Element {
           sm: "92vw",
           md: 400,
         },
+        left: { xs: "50%", sm: "50%", md: "1%" },
+        transform: {
+          xs: "translate(-50%, 0)",
+          sm: "translate(-50%, 0)",
+          md: "none",
+        },
         marginTop: 1.8,
         backgroundColor: "white",
         position: "absolute",
-        left: "50%",
-        transform: "translate(-50%, 0)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",

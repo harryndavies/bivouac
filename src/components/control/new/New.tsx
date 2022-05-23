@@ -1,10 +1,9 @@
 import Graphic from "@arcgis/core/Graphic";
-import { Save } from "@mui/icons-material";
 import { Box, Button, Divider, Grid, TextField } from "@mui/material";
 import { User } from "firebase/auth";
 import React from "react";
-import { createFeature } from "../../factories/esri/helpers";
-import { ISite } from "../../shared/types";
+import { createFeature } from "../../../factories/esri/helpers";
+import { ISite } from "../../../shared/types";
 
 interface IProps {
   view: __esri.MapView;
@@ -16,13 +15,11 @@ interface IProps {
 }
 
 export default function New(props: IProps): JSX.Element {
-  const [loading, setLoading] = React.useState(false);
   /**
    * Handles the creation of a new site feature
    */
   const createSite = async () => {
     if (props.view && props.currentGroup !== "") {
-      setLoading(true);
       props.tempGraphicsLayer.removeAll();
 
       const newSiteAttributes: ISite = {
@@ -36,30 +33,22 @@ export default function New(props: IProps): JSX.Element {
       });
 
       await createFeature(props.view, "sites", pointGraphic);
-      setLoading(false);
     }
   };
 
   return (
     <Box>
       <Grid container>
-        <Grid item xs={12}>
+        <Grid item xs={9}>
           <TextField placeholder="Title" fullWidth />
           <Divider />
         </Grid>
-        <Grid item xs={12}>
-          <TextField multiline rows={2} placeholder="Description" fullWidth />
-        </Grid>
-
-        <Grid item xs={12}>
+        <Grid item xs={3} sx={{ display: "flex", alignItems: "center" }}>
           <Button
-            fullWidth
-            onClick={createSite}
             variant="contained"
-            color="primary"
-            startIcon={<Save />}
+            size="small"
             sx={{ borderRadius: 0 }}
-            disabled={props.currentGroup === "" || loading}
+            onClick={createSite}
           >
             Save
           </Button>

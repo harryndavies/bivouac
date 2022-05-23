@@ -33,7 +33,9 @@ export const initialMode = {
 };
 
 interface IProps {
+  currentGroup: string;
   user: User;
+  setCurrentGroup(newGroup: string): void;
 }
 
 export default function Groups(props: IProps): JSX.Element {
@@ -63,13 +65,27 @@ export default function Groups(props: IProps): JSX.Element {
     <Box>
       <List sx={{ my: 0, py: 0 }}>
         {myMemberships.map((m) => (
-          <GroupItem key={m.group} id={m.group} mode={mode} setMode={setMode} />
+          <GroupItem
+            key={m.group}
+            id={m.group}
+            backgroundColor={
+              props.currentGroup === m.group ? "#f9f9f9" : "white"
+            }
+            onClick={() => {
+              props.setCurrentGroup(m.group);
+
+              setMode({
+                mode: GroupsModes.EDIT,
+                group: { id: m.group, groupName: m.groupName },
+              });
+            }}
+          />
         ))}
       </List>
       <Divider />
       <Box sx={{ px: 2, pt: 1.5 }}>
         <Typography fontWeight={700} color="primary">
-          {mode.mode === GroupsModes.NEW ? "New Group" : `Add Member`}
+          {mode.mode === GroupsModes.NEW ? "New Group" : `Invite`}
         </Typography>
       </Box>
 
